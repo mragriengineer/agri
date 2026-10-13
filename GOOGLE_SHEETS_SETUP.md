@@ -1,17 +1,17 @@
-# Connect website enquiries to Google Sheets
+# Manage website enquiries in Google Sheets
 
-The website form saves enquiries to a new spreadsheet owned by your Google account. It does not use another company's spreadsheet.
+The website form saves enquiries to the Mr Agri Engineer spreadsheet owned by your Google account. It does not use another company's spreadsheet. The current spreadsheet is [Mr Agri Engineer — Enquiries](https://docs.google.com/spreadsheets/d/1nzBQTJWt8TZ7BjL5RRSNDV-okuqQOscJtjTa7l4fR90/edit).
 
 ## Set up the sheet and endpoint
 
-1. Sign in to the Google account that should own the enquiry sheet and open [script.google.com](https://script.google.com).
-2. Create a new Apps Script project and replace the editor contents with [`google-apps-script/Code.gs`](./google-apps-script/Code.gs).
-3. Run `setupAgriEnquiries` once and approve the requested Google Sheets permissions. Open the execution log to get the URL of the newly created **Mr Agri Engineer — Enquiries** spreadsheet.
-4. In Apps Script, choose **Deploy → New deployment → Web app**. Set **Execute as** to your account and access to **Anyone** so website visitors can submit enquiries. Deploy and copy the web app URL ending in `/exec`.
-5. Paste that URL as the `SCRIPT_URL` value in [`config.js`](./config.js), keeping the surrounding quotes.
-6. Publish the website and submit a test enquiry. Confirm it appears in the spreadsheet's `Enquiries` tab. Keep the spreadsheet itself private; only the Apps Script endpoint needs public access.
+1. Sign in to the Google account that owns the enquiry sheet and open the existing Agri Engineer Apps Script project at [script.google.com](https://script.google.com).
+2. Replace the editor contents with the updated [`google-apps-script/Code.gs`](./google-apps-script/Code.gs), then save the project.
+3. Select and run `setupAgriEnquiries`. Approve the additional Google Sheets and email permissions when prompted. This updates the existing `Enquiries` tab, preserves enquiry rows, adds the `Source`, `Notes`, and `Updated` columns, applies status/source dropdowns, and creates or refreshes the `Dashboard` tab. It must not create a replacement spreadsheet.
+4. Open the existing `Enquiries` tab to manage each lead. Choose a status from its dropdown; editing Status or Notes records the latest edit time in `Updated`. The Dashboard summarizes enquiry counts by status, source, and service, and shows recent enquiries.
+5. Choose **Deploy → Manage deployments**, edit the existing web app deployment, select **New version**, set **Execute as** to your account and **Who has access** to **Anyone**, then deploy. Keep the existing `/exec` URL in [`config.js`](./config.js); it remains the website endpoint.
+6. Submit a test enquiry with a valid email. Confirm the row appears in `Enquiries`, the Dashboard updates, and email arrives at `mragriengineer@gmail.com` and at the submitted customer address. Keep the spreadsheet private; only the Apps Script endpoint needs public access.
 
-The sheet records an enquiry ID, submission time, contact details, land details, requested service, budget, message, and a `New` status. If the form is not connected yet, the website directs visitors to email `mragriengineer@gmail.com` rather than claiming the enquiry was saved.
+The status choices are `New`, `Contacted`, `Site Visit Planned`, `Proposal Sent`, `Follow-up`, `Confirmed`, `In Progress`, `Completed`, and `Not Proceeding`. The owner and customer acknowledgement emails are sent after the row is stored. Email notification failures are logged and returned separately; the form still confirms that an enquiry was saved when sheet storage succeeded. A valid customer email address is required for the acknowledgement workflow.
 
 ## If the form reports “Failed to fetch”
 

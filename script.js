@@ -73,7 +73,9 @@ form.addEventListener('submit', async event => {
     if (!result.ok) throw new Error(result.error || 'The enquiry could not be saved. Please try again.');
 
     form.reset();
-    status.textContent = 'Thank you. Your enquiry has been received.';
+    status.textContent = result.emailWarnings?.length
+      ? `Your enquiry has been saved (${result.enquiryId}), but ${result.emailWarnings.join(' ')} Please contact us at mragriengineer@gmail.com if needed.`
+      : `Thank you. Your enquiry ${result.enquiryId ? `(${result.enquiryId}) ` : ''}has been received. Our team will contact you soon.`;
   } catch (error) {
     if (error instanceof TypeError) {
       status.textContent = 'The Google Apps Script endpoint is not publicly reachable. In Apps Script, set the web app to execute as you and allow access to Anyone, deploy a new version, then try again. You can also email mragriengineer@gmail.com.';

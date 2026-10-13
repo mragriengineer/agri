@@ -88,10 +88,11 @@
           <p class="contact-email">Prefer email? <a href="mailto:mragriengineer@gmail.com">mragriengineer@gmail.com</a></p>
         </div>
         <form class="enquiry-form reveal" id="enquiryForm">
+          <input type="hidden" name="source" value="Website" />
           <div class="form-grid">
             <label>Name *<input name="name" required autocomplete="name" maxlength="100" placeholder="Your name" /></label>
             <label>Phone number *<input name="phone" type="tel" required autocomplete="tel" maxlength="30" placeholder="Include country code if outside India" /></label>
-            <label>Email address<input name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" /></label>
+            <label>Email address *<input name="email" type="email" required autocomplete="email" maxlength="254" placeholder="you@example.com" /></label>
             <label>Land location<input name="location" autocomplete="address-level2" maxlength="160" placeholder="Village, district, state" /></label>
             <label>Approximate land size<input name="landSize" maxlength="80" placeholder="For example, 2 acres" /></label>
             <label>What would you like help with?
